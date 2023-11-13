@@ -153,11 +153,9 @@ class jspts:
                 sessionCreate = True
                 elements.remove("session")
                 elements.remove("created")
-            # 			print elements #DEBUG
             ipData = self.splitSRXipInfo(elements[0])
             if self.analyseNAT == True:  # TO be coded
                 ipNATData = self.splitSRXipInfo(elements[2])
-            # 			print ipData #DEBUG
 
             # Record Flow
             flowString = (
@@ -176,7 +174,6 @@ class jspts:
                     self.hostFlows[ipData[0]].append(flowString)
             else:
                 self.hostFlows[ipData[0]] = [flowString]
-            # 			print flowString #DEBUG
 
             # Count Protocol
             self.protoCount(elements[5])
@@ -225,17 +222,23 @@ class jspts:
         if options.verbose:
             sys.stdout.write("\n-- %s Traffic Summary --\n" % options.policyname)
 
-        print "%d unique source hosts generating Security Flows hitting '%s' policy" % (
-            len(self.hostFlows),
+        print(
+            "%d unique source hosts generating Security Flows hitting '%s' policy"
+            % len(self.hostFlows),
             options.policyname,
         )
-        print "- Traffic included:\n\t%d ICMP flows\n\t%d UDP Flows\n\t%d TCP and Other Flows\n" % (
-            self.ICMP_SESSIONS,
-            self.UDP_SESSIONS,
-            self.TCP_SESSIONS,
+        print(
+            "- Traffic included:\n\t%d ICMP flows\n\t%d UDP Flows\n\t%d TCP and Other Flows\n"
+            % (
+                self.ICMP_SESSIONS,
+                self.UDP_SESSIONS,
+                self.TCP_SESSIONS,
+            )
         )
         if options.verbose:
-            print "Output Format:\nDNS_NAME (IP):\n\t- DST_IP,DST_PORT,SRC_ZONE,DST_ZONE\n"
+            print(
+                "Output Format:\nDNS_NAME (IP):\n\t- DST_IP,DST_PORT,SRC_ZONE,DST_ZONE\n"
+            )
 
         for i in sorted(self.hostFlows.iterkeys()):
             if options.dns:
